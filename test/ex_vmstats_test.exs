@@ -90,7 +90,8 @@ defmodule ExVmstatsTest do
         run_and_terminate_server(600)
       end)
 
-    scheduler_metric_count = :erlang.system_info(:schedulers) * 2
+    scheduler_count = :erlang.system_info(:schedulers) + :erlang.system_info(:dirty_cpu_schedulers)
+    scheduler_metric_count = scheduler_count * 2
 
     assert match_count(~r/timer/, capture) == scheduler_metric_count
 

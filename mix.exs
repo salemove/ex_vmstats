@@ -4,15 +4,17 @@ defmodule ExVmstats.Mixfile do
   @version "0.0.1"
 
   def project do
-    [app: :ex_vmstats,
-     version: @version,
-     elixir: "~> 1.1",
-     description: "An Elixir package for pushing Erlang VM stats into StatsD.",
-     package: package(),
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
-     deps: deps(),
-     xref: [exclude: [ExStatsD]]]
+    [
+      app: :ex_vmstats,
+      version: @version,
+      elixir: "~> 1.1",
+      description: "An Elixir package for pushing Erlang VM stats into StatsD.",
+      package: package(),
+      build_embedded: Mix.env() == :prod,
+      start_permanent: Mix.env() == :prod,
+      deps: deps(),
+      xref: [exclude: [ExStatsD]]
+    ]
   end
 
   # Configuration for the OTP application

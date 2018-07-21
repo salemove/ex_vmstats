@@ -34,17 +34,19 @@ defmodule ExVmstatsTest do
   end
 
   test "no stats sent before timeout" do
-    capture = capture_log fn ->
-      run_and_terminate_server(400)
-    end
+    capture =
+      capture_log(fn ->
+        run_and_terminate_server(400)
+      end)
 
     assert capture == ""
   end
 
   test "single set of stats is sent after timeout" do
-    capture = capture_log fn ->
-      run_and_terminate_server(600)
-    end
+    capture =
+      capture_log(fn ->
+        run_and_terminate_server(600)
+      end)
 
     for regex <- @metric_regexes do
       assert match_count(regex, capture) == 1
@@ -54,9 +56,10 @@ defmodule ExVmstatsTest do
   end
 
   test "two sets of stats are sent after two timeouts" do
-    capture = capture_log fn ->
-      run_and_terminate_server(1200)
-    end
+    capture =
+      capture_log(fn ->
+        run_and_terminate_server(1200)
+      end)
 
     for regex <- @metric_regexes do
       assert match_count(regex, capture) == 2
@@ -68,9 +71,10 @@ defmodule ExVmstatsTest do
   test "use_histogram" do
     Application.put_env(:ex_vmstats, :use_histogram, true)
 
-    capture = capture_log fn ->
-      run_and_terminate_server(600)
-    end
+    capture =
+      capture_log(fn ->
+        run_and_terminate_server(600)
+      end)
 
     assert match_count(~r/histogram/, capture) == 11
     assert match_count(~r/gauge/, capture) == 0
@@ -81,14 +85,17 @@ defmodule ExVmstatsTest do
   test "sched_time enabled" do
     Application.put_env(:ex_vmstats, :sched_time, true)
 
-    capture = capture_log fn ->
-      run_and_terminate_server(600)
-    end
+    capture =
+      capture_log(fn ->
+        run_and_terminate_server(600)
+      end)
 
     scheduler_metric_count = :erlang.system_info(:schedulers) * 2
 
     assert match_count(~r/timer/, capture) == scheduler_metric_count
-    assert match_count(~r/scheduler_wall_time.(\d+)(.active|.total)/, capture) == scheduler_metric_count
+
+    assert match_count(~r/scheduler_wall_time.(\d+)(.active|.total)/, capture) ==
+             scheduler_metric_count
 
     Application.put_env(:ex_vmstats, :sched_time, false)
   end

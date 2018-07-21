@@ -1,2 +1,3 @@
-%{"ex_statsd": {:hex, :ex_statsd, "0.5.3", "e86dd97e25dbc80786e7d22b3c5537f2052a7e12daaaa7e6f2b9c34d03dbbd44", [:mix], []},
+%{"config_ext": {:hex, :config_ext, "0.3.0", "2136853cc476ca3cbb52ebe73e54f2d272ef23b8cd8ef40d4dcbbdcdb1eeca24", [:mix], [], "hexpm"},
+  "ex_statsd": {:git, "https://github.com/driv3r/ex_statsd", "c0647435d7803b38eb09eab28b786d5f5b57d32c", []},
   "statix": {:hex, :statix, "1.0.0", "836c0752ad2b568dcdc9b1e67df0df91ad491ea1e19965ac219a9a0569e7e338", [:mix], []}}

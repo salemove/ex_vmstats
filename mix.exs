@@ -37,7 +37,9 @@ defmodule ExVmstats.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:ex_statsd, "~> 0.5", optional: true}]
+    [
+      {:ex_statsd, git: "https://github.com/driv3r/ex_statsd"}
+    ]
   end
 
   defp package do

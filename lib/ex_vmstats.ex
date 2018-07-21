@@ -83,9 +83,13 @@ defmodule ExVmstats do
     # Queued up processes (lower is better)
     gauge_or_hist(state, :erlang.statistics(:run_queue), metric_name.("run_queue"))
 
+    # Erlang/OTP 21 registers logger under :logger, previous versions register
+    # under :error_logger
+    logger_pid = Process.whereis(:error_logger) || Process.whereis(:logger)
+
     # Error logger backlog (lower is better)
     error_logger_backlog =
-      Process.whereis(:error_logger)
+      logger_pid
       |> Process.info(:message_queue_len)
       |> elem(1)
 

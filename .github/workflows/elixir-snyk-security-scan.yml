@@ -1,0 +1,17 @@
+name: Security
+
+on:
+  pull_request:
+  merge_group:
+  push:
+    branches:
+      - master
+
+jobs:
+  security-scan:
+    uses: salemove/glia-security-workflows/.github/workflows/elixir-snyk-security-scan.yaml@master
+    with:
+      otp-version: '27.2'
+      elixir-version: '1.18'
+    secrets:
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
